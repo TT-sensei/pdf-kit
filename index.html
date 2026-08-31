@@ -39,20 +39,5 @@
   </main><footer class="site-footer">ファイル工房 · ブラウザ内処理で、学校のファイル仕事をシンプルに</footer>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js" defer></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const files = document.getElementById('files-panel');
-      const settings = document.getElementById('settings-panel');
-      const hint = document.querySelector('.tool-navi-hint');
-      const sync = () => {
-        if (!files || !settings) return;
-        if (files.parentNode) files.parentNode.insertBefore(files, settings);
-        if (hint && hint.parentNode) hint.parentNode.insertBefore(hint, settings);
-        files.classList.toggle('has-files', !files.hidden && files.textContent.trim().length > 0);
-      };
-      new MutationObserver(sync).observe(document.getElementById('tool-view'), {subtree:true, childList:true, attributes:true, attributeFilter:['hidden']});
-      sync();
-    });
-  </script>
   <script type="module" src="js/app-v2.js"></script>
 </body></html>
