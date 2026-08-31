@@ -9,69 +9,27 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="site-header">
-    <div class="header-inner">
-      <button class="brand" type="button" data-home aria-label="ファイル工房のトップへ">
-        <span class="brand-mark" aria-hidden="true">▦</span>
-        <span><strong>ファイル工房</strong><small>PDF・画像を、もっとかんたんに。</small></span>
-      </button>
-      <div class="privacy-pill" role="note"><span aria-hidden="true">🔒</span> ファイルはブラウザ内で処理</div>
-    </div>
-  </header>
-
+  <header class="site-header"><div class="header-inner">
+    <button class="brand" type="button" data-home aria-label="ファイル工房のトップへ"><span class="brand-mark" aria-hidden="true">▦</span><span><strong>ファイル工房</strong><small>PDF・画像を、もっとかんたんに。</small></span></button>
+    <div class="privacy-pill" role="note"><span aria-hidden="true">🔒</span> ファイルはブラウザ内で処理</div>
+  </div></header>
   <main class="app-shell">
     <section id="home-view" class="view active" aria-labelledby="home-title">
-      <div class="hero">
-        <div>
-          <p class="eyebrow">先生のためのファイルツール</p>
-          <h1 id="home-title">ファイル工房</h1>
-          <p>PDF・画像を、もっとかんたんに。</p>
-        </div>
-        <div class="privacy-card"><strong>安心して使えます</strong><span>選んだファイルは外部サーバーに送信されません。ブラウザ内で処理します。</span></div>
-      </div>
+      <div class="hero"><div><p class="eyebrow">先生のためのファイルツール</p><h1 id="home-title">ファイル工房</h1><p>PDF・画像を、もっとかんたんに。</p></div><div class="privacy-card"><strong>安心して使えます</strong><span>選んだファイルは外部サーバーに送信されません。ブラウザ内で処理します。</span></div></div>
       <div class="tool-grid">
-        <button class="tool-card" type="button" data-tool="pdf-image">
-          <span class="tool-icon pdf" aria-hidden="true">PDF</span><span><strong>PDF → 画像</strong><small>PNG・JPG・WebPに変換</small></span><span class="arrow" aria-hidden="true">›</span>
-        </button>
-        <button class="tool-card" type="button" data-tool="image-webp">
-          <span class="tool-icon image" aria-hidden="true">IMG</span><span><strong>画像 → WebP</strong><small>画像を軽くしてWeb用に</small></span><span class="arrow" aria-hidden="true">›</span>
-        </button>
-        <button class="tool-card" type="button" data-tool="image-pdf">
-          <span class="tool-icon doc" aria-hidden="true">PDF</span><span><strong>画像 → PDF</strong><small>画像をまとめてPDFに</small></span><span class="arrow" aria-hidden="true">›</span>
-        </button>
-      </div>
-      <p class="local-note">インストール不要・会員登録不要・ファイルのアップロード不要</p>
+        <button class="tool-card" type="button" data-tool="pdf-image"><span class="tool-icon pdf" aria-hidden="true">PDF</span><span><strong>PDF → 画像</strong><small>PNG・JPG・WebPに変換</small></span><span class="arrow" aria-hidden="true">›</span></button>
+        <button class="tool-card" type="button" data-tool="image-webp"><span class="tool-icon image" aria-hidden="true">IMG</span><span><strong>画像 → WebP</strong><small>画像を軽くしてWeb用に</small></span><span class="arrow" aria-hidden="true">›</span></button>
+        <button class="tool-card" type="button" data-tool="image-pdf"><span class="tool-icon doc" aria-hidden="true">PDF</span><span><strong>画像 → PDF</strong><small>画像をまとめてPDFに</small></span><span class="arrow" aria-hidden="true">›</span></button>
+      </div><p class="local-note">インストール不要・会員登録不要・ファイルのアップロード不要</p>
     </section>
-
     <section id="tool-view" class="view" aria-labelledby="tool-title" hidden>
-      <div class="tool-header">
-        <button class="back-button" type="button" data-home>← トップへ</button>
-        <div><p class="eyebrow" id="tool-step-label">① ファイルを入れる</p><h2 id="tool-title">PDF → 画像</h2></div>
-      </div>
+      <div class="tool-header"><button class="back-button" type="button" data-home>← トップへ</button><div><p class="eyebrow" id="tool-step-label">① ファイルを入れる</p><h2 id="tool-title">PDF → 画像</h2></div></div>
       <div class="stepper" aria-label="処理ステップ"><span class="step active" data-step="1">① ファイルを入れる</span><span class="step" data-step="2">② 設定する</span><span class="step" data-step="3">③ 変換する</span><span class="step" data-step="4">④ 保存する</span></div>
-
-      <div id="drop-zone" class="drop-zone" tabindex="0" role="button" aria-label="ファイルを選択またはここへドロップ">
-        <div class="drop-icon" aria-hidden="true">＋</div>
-        <strong>ここにファイルをドロップ</strong>
-        <span>または</span>
-        <button id="file-button" class="primary-button" type="button">ファイルを選択</button>
-        <small id="file-hint">PDFを選択してください</small>
-        <input id="file-input" type="file" hidden>
-      </div>
-
-      <div id="settings-panel" class="panel" hidden></div>
-      <div id="files-panel" class="panel" hidden></div>
-      <div id="progress-panel" class="panel progress-panel" hidden aria-live="polite"></div>
-      <div id="result-panel" class="panel result-panel" hidden aria-live="polite"></div>
-      <div id="error-panel" class="error-panel" hidden role="alert"></div>
+      <div id="drop-zone" class="drop-zone" tabindex="0" role="button" aria-label="ファイルを選択またはここへドロップ"><div class="drop-icon" aria-hidden="true">＋</div><strong>ここにファイルをドロップ</strong><span>または</span><button id="file-button" class="primary-button" type="button">ファイルを選択</button><small id="file-hint">PDFを選択してください</small><input id="file-input" type="file" hidden></div>
+      <div id="settings-panel" class="panel" hidden></div><div id="files-panel" class="panel" hidden></div><div id="progress-panel" class="panel progress-panel" hidden aria-live="polite"></div><div id="result-panel" class="panel result-panel" hidden aria-live="polite"></div><div id="error-panel" class="error-panel" hidden role="alert"></div>
     </section>
-  </main>
-
-  <footer class="site-footer">ファイル工房 · ブラウザ内処理で、学校のファイル仕事をシンプルに</footer>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.min.mjs" type="module" id="pdfjs-module"></script>
+  </main><footer class="site-footer">ファイル工房 · ブラウザ内処理で、学校のファイル仕事をシンプルに</footer>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js" defer></script>
   <script type="module" src="js/app.js"></script>
-</body>
-</html>
+</body></html>
