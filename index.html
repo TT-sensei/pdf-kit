@@ -15,7 +15,7 @@
   </div></header>
   <main class="app-shell">
     <section id="home-view" class="view active" aria-labelledby="home-title">
-      <div class="hero"><div><p class="eyebrow">先生のためのファイルツール</p><h1 id="home-title">ファイル工房</h1><p>PDF・画像を、もっとかんたんに。</p></div><div class="privacy-card"><strong>安心して使えます</strong><span>選んだファイルは外部サーバーに送信されません。ブラウザ内で処理します。</span></div></div>
+      <div class="hero"><div><p class="eyebrow">先生のためのファイルツール</p><h1 id="home-title">ファイル工房</h1><p>PDF・画像を、もっとかんたんに。</p></div><div class="hero-navi"><img src="https://raw.githubusercontent.com/TT-sensei/navi-character-/main/assets/web/characters/kai/expressions/01-normal-smile.webp" alt="ナビキャラクターのカイ" loading="lazy"><div><strong>先生のファイル仕事を、ちょっと楽に。</strong><span>選んだファイルはこのあと確認できます。</span></div></div><div class="privacy-card"><strong>安心して使えます</strong><span>選んだファイルは外部サーバーに送信されません。ブラウザ内で処理します。</span></div></div>
       <div class="tool-grid">
         <button class="tool-card" type="button" data-tool="pdf-image"><span class="tool-icon pdf" aria-hidden="true">PDF</span><span><strong>PDF → 画像</strong><small>PNG・JPG・WebPに変換</small></span><span class="arrow" aria-hidden="true">›</span></button>
         <button class="tool-card" type="button" data-tool="image-webp"><span class="tool-icon image" aria-hidden="true">IMG</span><span><strong>画像 → WebP</strong><small>画像を軽くしてWeb用に</small></span><span class="arrow" aria-hidden="true">›</span></button>
@@ -32,10 +32,27 @@
       <div class="tool-header"><button class="back-button" type="button" data-home>← トップへ</button><div><p class="eyebrow" id="tool-step-label">① ファイルを入れる</p><h2 id="tool-title">PDF → 画像</h2></div></div>
       <div class="stepper" aria-label="処理ステップ"><span class="step active" data-step="1">① ファイルを入れる</span><span class="step" data-step="2">② 設定する</span><span class="step" data-step="3">③ 変換する</span><span class="step" data-step="4">④ 保存する</span></div>
       <div id="drop-zone" class="drop-zone" tabindex="0" role="button" aria-label="ファイルを選択またはここへドロップ"><div class="drop-icon" aria-hidden="true">＋</div><strong>ここにファイルをドロップ</strong><span>または</span><button id="file-button" class="primary-button" type="button">ファイルを選択</button><small id="file-hint">PDFを選択してください</small><input id="file-input" type="file" hidden></div>
-      <div id="settings-panel" class="panel" hidden></div><div id="files-panel" class="panel" hidden></div><div id="progress-panel" class="panel progress-panel" hidden aria-live="polite"></div><div id="result-panel" class="panel result-panel" hidden aria-live="polite"></div><div id="error-panel" class="error-panel" hidden role="alert"></div>
+      <div id="files-panel" class="panel selected-files-panel" hidden></div>
+      <div class="tool-navi-hint"><img src="https://raw.githubusercontent.com/TT-sensei/navi-character-/main/assets/web/characters/kai/expressions/07-encouraging.webp" alt="" loading="lazy"><span>ファイルを確認したら、その下の設定で変換方法を選べます。</span></div>
+      <div id="settings-panel" class="panel" hidden></div><div id="progress-panel" class="panel progress-panel" hidden aria-live="polite"></div><div id="result-panel" class="panel result-panel" hidden aria-live="polite"></div><div id="error-panel" class="error-panel" hidden role="alert"></div>
     </section>
   </main><footer class="site-footer">ファイル工房 · ブラウザ内処理で、学校のファイル仕事をシンプルに</footer>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js" defer></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const files = document.getElementById('files-panel');
+      const settings = document.getElementById('settings-panel');
+      const hint = document.querySelector('.tool-navi-hint');
+      const sync = () => {
+        if (!files || !settings) return;
+        if (files.parentNode) files.parentNode.insertBefore(files, settings);
+        if (hint && hint.parentNode) hint.parentNode.insertBefore(hint, settings);
+        files.classList.toggle('has-files', !files.hidden && files.textContent.trim().length > 0);
+      };
+      new MutationObserver(sync).observe(document.getElementById('tool-view'), {subtree:true, childList:true, attributes:true, attributeFilter:['hidden']});
+      sync();
+    });
+  </script>
   <script type="module" src="js/app-v2.js"></script>
 </body></html>
