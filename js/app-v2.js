@@ -47,7 +47,7 @@ function setupRecentTools(){
  const grid=document.querySelector('.tool-grid');if(!grid)return;
  const cards=[...grid.querySelectorAll('.tool-card')];
  const search=document.querySelector('#tool-search'),count=document.querySelector('#tool-search-count'),empty=document.querySelector('#tool-search-empty');
- cards.forEach((card,i)=>{card.dataset.baseOrder=String(i);card.dataset.toolKey=card.dataset.tool||card.getAttribute('href')||('tool-'+i);card.dataset.searchText=card.textContent.toLocaleLowerCase('ja').replace(/\\s+/g,' ')});
+ cards.forEach((card,i)=>{card.dataset.baseOrder=String(i);card.dataset.toolKey=card.dataset.tool||card.getAttribute('href')||('tool-'+i);card.dataset.searchText=card.textContent.toLocaleLowerCase('ja').replace(/\s+/g,' ')});
  const filter=()=>{const q=(search?.value||'').trim().toLocaleLowerCase('ja');let visible=0;cards.forEach(card=>{const match=!q||card.dataset.searchText.includes(q);card.hidden=!match;if(match)visible++});if(count)count.textContent=`${visible} / ${cards.length}件`;if(empty)empty.hidden=visible!==0};
  search?.addEventListener('input',filter);
  const read=()=>{try{return JSON.parse(localStorage.getItem('pdf-kit-recent-tools')||'[]').filter(x=>typeof x==='string')}catch{return []}};
