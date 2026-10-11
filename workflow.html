@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f7f8fa">
+<meta name="description" content="PDFの結合、文字入れ、ページ番号、面付け、並べ替え、画像保存をまとめて行えます。">
+<title>まとめて加工 | ファイル工房</title>
+<link rel="stylesheet" href="https://tt-sensei.github.io/edu-effects/css/edu-effects.css">
+<link rel="stylesheet" href="style.css">
+<style>
+.workflow-intro{margin:0 0 20px;color:var(--muted)}
+.workflow-section{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px;margin:14px 0;box-shadow:var(--shadow)}
+.workflow-section h3{margin:0 0 8px;font-size:17px}
+.workflow-section .section-note{margin:0 0 15px;color:var(--muted);font-size:12px}
+.workflow-files{display:grid;gap:8px}
+.workflow-file{display:grid;grid-template-columns:38px minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px;border:1px solid var(--line);border-radius:10px}
+.workflow-file .file-index{display:grid;place-items:center;width:32px;height:32px;border-radius:9px;background:#eef4ff;color:#315bd6;font-weight:800}
+.workflow-file strong{display:block;overflow-wrap:anywhere;font-size:13px}
+.workflow-file small{color:var(--muted);font-size:11px}
+.workflow-file .file-actions{display:flex;gap:5px}
+.workflow-file button{min-width:38px;min-height:38px;border:1px solid var(--line);background:#fff;border-radius:8px;cursor:pointer}
+.workflow-file button:disabled{opacity:.35;cursor:not-allowed}
+.workflow-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.workflow-field{display:flex;flex-direction:column;gap:6px;min-width:0}
+.workflow-field label,.workflow-check strong{font-size:13px;font-weight:700}
+.workflow-field input,.workflow-field select{width:100%;min-height:44px;border:1px solid #cfd5dd;border-radius:9px;padding:9px 11px;background:#fff;color:var(--ink)}
+.workflow-check{display:flex;align-items:flex-start;gap:10px;padding:12px;border:1px solid var(--line);border-radius:10px;margin-bottom:10px}
+.workflow-check input{width:20px;height:20px;flex:none;margin-top:2px}
+.workflow-check span{display:block;color:var(--muted);font-size:12px;margin-top:3px;font-weight:400}
+.workflow-hint{background:#f5f7fb;border-radius:10px;padding:12px;color:var(--muted);font-size:12px;margin-top:12px}
+.workflow-run{display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap;margin-top:16px}
+.workflow-run button{min-height:48px;padding:12px 20px}
+.workflow-preview{display:grid;grid-template-columns:repeat(auto-fill,minmax(135px,1fr));gap:12px;margin-top:14px}
+.workflow-preview article{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff}
+.workflow-preview img{display:block;width:100%;aspect-ratio:3/4;object-fit:contain;background:#f3f4f6}
+.workflow-preview p{margin:0;padding:8px;font-size:11px;color:var(--muted)}
+.workflow-status{margin-top:12px;padding:12px;border-radius:10px;background:#f5f7fb;color:var(--ink);font-size:13px}
+.workflow-error{color:#b42318;background:#fff4f2;border:1px solid #f2c1bb}
+@media(max-width:700px){.workflow-section{padding:15px}.workflow-grid{grid-template-columns:1fr}.workflow-file{grid-template-columns:32px minmax(0,1fr)}.workflow-file .file-actions{grid-column:2;justify-content:flex-start}.workflow-run>*{flex:1}}
+</style>
+</head>
+<body>
+<header class="site-header"><div class="header-inner"><a class="brand" href="index.html" style="text-decoration:none;color:inherit"><span class="brand-mark" aria-hidden="true">▦</span><span><strong>ファイル工房</strong><small>PDF・画像を、もっとかんたんに。</small></span></a><div class="privacy-pill">🔒 ファイルはブラウザ内で処理</div></div></header>
+<main class="app-shell">
+<div class="tool-header"><a class="back-button" href="index.html">← トップへ</a><div><p class="eyebrow">まとめて加工 · 一連の作業</p><h2>まとめて加工</h2></div></div>
+<p class="workflow-intro">ファイルを一度選んだら、必要な加工をまとめて実行。個別のモードはこれまでどおり、別々に使えます。</p>
+<section class="workflow-section">
+<h3>① PDFを選ぶ</h3><p class="section-note">複数のPDFを選ぶと、表示順に結合してから加工します。順番はあとから変更できます。</p>
+<div class="workflow-run" style="justify-content:flex-start;margin-top:0"><button id="pick-files" class="primary-button" type="button">PDFを追加</button><input id="files-input" type="file" accept="application/pdf,.pdf" multiple hidden><button id="clear-files" class="secondary-button" type="button">すべて外す</button></div>
+<div id="files-list" class="workflow-files" style="margin-top:12px"></div><div id="file-note" class="workflow-hint">PDFはこの端末のブラウザ内で処理します。ファイルが外部サーバーへ送信されることはありません。</div>
+</section>
+<section class="workflow-section">
+<h3>② 必要な加工を選ぶ</h3><p class="section-note">チェックした加工だけを実行します。処理順は「文字 → 面付け → ページ順 → ページ番号」です。</p>
+<label class="workflow-check"><input id="use-text" type="checkbox"><div><strong>文字を追加する</strong><span>日本語も入力できます。選んだ文字を各ページの下部に追加します。</span></div></label>
+<div id="text-options" class="workflow-grid" hidden style="margin:0 0 14px 30px">
+<div class="workflow-field"><label for="overlay-text">追加する文字</label><input id="overlay-text" type="text" maxlength="120" placeholder="例：6年 社会科資料"></div>
+<div class="workflow-field"><label for="text-position">文字の位置</label><select id="text-position"><option value="bottom-left">左下</option><option value="bottom-center">中央下</option><option value="bottom-right">右下</option><option value="top-left">左上</option><option value="top-center">中央上</option><option value="top-right">右上</option></select></div>
+</div>
+<label class="workflow-check"><input id="use-nup" type="checkbox"><div><strong>2・4ページを1枚にまとめる</strong><span>印刷用にページを小さく配置します。面付け後はページ画像として配置されます。</span></div></label>
+<div id="nup-options" class="workflow-grid" hidden style="margin:0 0 14px 30px">
+<div class="workflow-field"><label for="nup-count">1枚にまとめるページ数</label><select id="nup-count"><option value="2">2ページ → 1枚</option><option value="4">4ページ → 1枚</option></select></div>
+<div class="workflow-field"><label for="nup-direction">並べ方</label><select id="nup-direction"><option value="vertical">縦に並べる</option><option value="horizontal">横に並べる</option></select></div>
+<div class="workflow-field"><label for="nup-paper">用紙の向き</label><select id="nup-paper"><option value="portrait">A4 縦</option><option value="landscape">A4 横</option></select></div>
+</div>
+<label class="workflow-check"><input id="use-reorder" type="checkbox"><div><strong>ページの順番を変更する</strong><span>加工後のページ順を指定します。例：3,1,2 または 5-8,1-4。指定しないページは後ろに続きます。</span></div></label>
+<div id="reorder-options" class="workflow-grid" hidden style="margin:0 0 14px 30px"><div class="workflow-field"><label for="page-order">新しいページ順</label><input id="page-order" type="text" placeholder="例：3,1,2,4-6"><span class="section-note">ページ番号は加工後のPDFを基準にします。</span></div></div>
+<label class="workflow-check"><input id="use-numbers" type="checkbox"><div><strong>ページ番号を追加する</strong><span>加工後のページに番号を入れます。面付けした場合は、用紙ごとの番号になります。</span></div></label>
+<div id="number-options" class="workflow-grid" hidden style="margin:0 0 14px 30px">
+<div class="workflow-field"><label for="number-start">開始番号</label><input id="number-start" type="number" min="1" max="999999" value="1"></div>
+<div class="workflow-field"><label for="number-position">番号の位置</label><select id="number-position"><option value="center">中央下</option><option value="right">右下</option><option value="left">左下</option></select></div>
+</div>
+</section>
+<section class="workflow-section">
+<h3>③ 保存方法を選ぶ</h3><div class="workflow-grid">
+<div class="workflow-field"><label for="output-type">出力形式</label><select id="output-type"><option value="pdf">PDFファイル</option><option value="png">ページごとのPNG画像（ZIP）</option><option value="jpg">ページごとのJPG画像（ZIP）</option></select></div>
+<div class="workflow-field"><label for="image-quality">画像の画質</label><select id="image-quality"><option value="1.5">標準</option><option value="2">高画質</option></select><span class="section-note">画像出力時に使用します。</span></div>
+</div>
+<div class="workflow-hint">ファイル数やページ数が多いと、処理に時間がかかる場合があります。元のPDFは変更されません。</div>
+<div class="workflow-run"><button id="run-workflow" class="primary-button" type="button">まとめて加工する</button></div>
+<div id="workflow-status" class="workflow-status" hidden role="status" aria-live="polite"></div>
+<div id="workflow-result" hidden></div>
+</section>
+</main>
+<footer class="site-footer">ファイル工房 · ブラウザ内処理で、学校のファイル仕事をシンプルに</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script type="module" src="js/workflow.js"></script>
+</body></html>
