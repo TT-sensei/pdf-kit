@@ -36,3 +36,5 @@
 .upload-preview-card img{display:block;width:100%;height:176px;object-fit:contain;background:#fff}
 .upload-preview-meta{padding:7px 8px;font-size:11px;color:var(--muted);overflow-wrap:anywhere}
 @media(max-width:520px){.upload-preview-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.upload-preview-card img{height:160px}}
+
+.tool-order-note{margin:0 0 12px;color:var(--muted);font-size:12px;line-height:1.6}
