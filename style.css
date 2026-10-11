@@ -15,15 +15,15 @@
 .page-thumb-card .thumb-controls button:disabled{opacity:.35;cursor:not-allowed}
 .text-preview-stage{position:relative;width:100%;max-width:650px;margin:10px auto 0;background:#f3f4f6;border:1px solid var(--line);border-radius:8px;overflow:hidden}
 .text-preview-stage canvas{display:block;width:100%;height:auto}
-.text-preview-label{position:absolute;z-index:1;max-width:88%;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.25;pointer-events:none;text-shadow:0 0 2px #fff,0 0 5px #fff}
+.text-preview-label{position:absolute;z-index:1;max-width:88%;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.25;pointer-events:none}
 .text-preview-label.is-placeholder{opacity:.55}
-.text-preview-label.pos-top-left{top:5%;left:6%;text-align:left}
-.text-preview-label.pos-top-center{top:5%;left:50%;transform:translateX(-50%);text-align:center}
-.text-preview-label.pos-top-right{top:5%;right:6%;text-align:right}
+.text-preview-label.pos-top-left{top:var(--text-preview-inset-y,3.3%);left:var(--text-preview-inset-x,4.7%);text-align:left}
+.text-preview-label.pos-top-center{top:var(--text-preview-inset-y,3.3%);left:50%;transform:translateX(-50%);text-align:center}
+.text-preview-label.pos-top-right{top:var(--text-preview-inset-y,3.3%);right:var(--text-preview-inset-x,4.7%);text-align:right}
 .text-preview-label.pos-center{top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
-.text-preview-label.pos-bottom-left{bottom:5%;left:6%;text-align:left}
-.text-preview-label.pos-bottom-center{bottom:5%;left:50%;transform:translateX(-50%);text-align:center}
-.text-preview-label.pos-bottom-right{bottom:5%;right:6%;text-align:right}
+.text-preview-label.pos-bottom-left{bottom:var(--text-preview-inset-y,3.3%);left:var(--text-preview-inset-x,4.7%);text-align:left}
+.text-preview-label.pos-bottom-center{bottom:var(--text-preview-inset-y,3.3%);left:50%;transform:translateX(-50%);text-align:center}
+.text-preview-label.pos-bottom-right{bottom:var(--text-preview-inset-y,3.3%);right:var(--text-preview-inset-x,4.7%);text-align:right}
 @media(max-width:600px){.page-thumb-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.page-thumb-card{padding:7px}.page-thumb-card .thumb-controls button{min-height:38px}}
 
 .field textarea{width:100%;min-height:86px;border:1px solid #cfd5dd;border-radius:9px;padding:10px 11px;background:#fff;color:var(--ink);resize:vertical;line-height:1.5}
