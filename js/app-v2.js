@@ -46,11 +46,15 @@ function accept(files){const a=[...files];if(!a.length)return;S.files=(S.tool===
 function setupRecentTools(){
  const grid=document.querySelector('.tool-grid');if(!grid)return;
  const cards=[...grid.querySelectorAll('.tool-card')];
- cards.forEach((card,i)=>{card.dataset.baseOrder=String(i);card.dataset.toolKey=card.dataset.tool||card.getAttribute('href')||('tool-'+i)});
+ const search=document.querySelector('#tool-search'),count=document.querySelector('#tool-search-count'),empty=document.querySelector('#tool-search-empty');
+ cards.forEach((card,i)=>{card.dataset.baseOrder=String(i);card.dataset.toolKey=card.dataset.tool||card.getAttribute('href')||('tool-'+i);card.dataset.searchText=card.textContent.toLocaleLowerCase('ja').replace(/\s+/g,' ')});
+ const filter=()=>{const q=(search?.value||'').trim().toLocaleLowerCase('ja');let visible=0;cards.forEach(card=>{const match=!q||card.dataset.searchText.includes(q);card.hidden=!match;if(match)visible++});if(count)count.textContent=`${visible} / ${cards.length}件`;if(empty)empty.hidden=visible!==0};
+ search?.addEventListener('input',filter);
  const read=()=>{try{return JSON.parse(localStorage.getItem('pdf-kit-recent-tools')||'[]').filter(x=>typeof x==='string')}catch{return []}};
  const sort=()=>{const recent=read();cards.sort((a,b)=>{const ai=recent.indexOf(a.dataset.toolKey),bi=recent.indexOf(b.dataset.toolKey);const ar=ai<0?999:ai,br=bi<0?999:bi;return ar-br||Number(a.dataset.baseOrder)-Number(b.dataset.baseOrder)});cards.forEach(card=>grid.appendChild(card))};
  cards.forEach(card=>card.addEventListener('click',()=>{const key=card.dataset.toolKey;const recent=read().filter(x=>x!==key);recent.unshift(key);try{localStorage.setItem('pdf-kit-recent-tools',JSON.stringify(recent.slice(0,12)))}catch{}sort()}));
  sort();
+ filter();
 }
 setupRecentTools();
 E.button.onclick=e=>{e.stopPropagation();E.input.click()};E.input.onchange=()=>{accept(E.input.files);E.input.value=''};E.drop.onclick=e=>{if(!e.target.closest('button'))E.input.click()};E.drop.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();E.input.click()}};['dragenter','dragover'].forEach(x=>E.drop.addEventListener(x,e=>{e.preventDefault();E.drop.classList.add('dragover')}));['dragleave','drop'].forEach(x=>E.drop.addEventListener(x,e=>{e.preventDefault();E.drop.classList.remove('dragover')}));E.drop.addEventListener('drop',e=>accept(e.dataTransfer.files));document.querySelectorAll('[data-tool]').forEach(b=>b.onclick=()=>openTool(b.dataset.tool));document.querySelectorAll('[data-home]').forEach(b=>b.onclick=home);
