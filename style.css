@@ -27,3 +27,12 @@
 @media(max-width:600px){.page-thumb-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.page-thumb-card{padding:7px}.page-thumb-card .thumb-controls button{min-height:38px}}
 
 .field textarea{width:100%;min-height:86px;border:1px solid #cfd5dd;border-radius:9px;padding:10px 11px;background:#fff;color:var(--ink);resize:vertical;line-height:1.5}
+
+/* Uploaded file previews shared by all tools */
+.upload-preview{margin-top:18px;padding-top:16px;border-top:1px solid var(--line)}
+.upload-preview h3{margin:0 0 6px;font-size:16px}
+.upload-preview-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:12px;margin-top:12px}
+.upload-preview-card{min-width:0;overflow:hidden;border:1px solid var(--line);border-radius:10px;background:#f7f8fa}
+.upload-preview-card img{display:block;width:100%;height:176px;object-fit:contain;background:#fff}
+.upload-preview-meta{padding:7px 8px;font-size:11px;color:var(--muted);overflow-wrap:anywhere}
+@media(max-width:520px){.upload-preview-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.upload-preview-card img{height:160px}}
